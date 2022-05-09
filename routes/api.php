@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\ProductController;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\Product;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,18 +20,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/products', function(){
-    return Product::all();
-});
+Route::resource('products', ProductController::class);
+Route::get('/products/search/{name}', [ProductController::class, 'search']);
+// Route::get('/products', [ProductController::class, 'index']);
 
-Route::post('/products', function(){
-    return Product::create([
-        'name' => 'Diploma Milk',
-        'slug' => 'diploma-milk',
-        'description' => '500g full cream milk powder with Vitamin D3',
-        'price' => '370.80'
-    ]);
-});
+// Route::post('/products', [ProductController::class, 'store']);
+// Route::get('/products/{id}', [ProductController::class, 'show']);
 
 
 //test purpose
